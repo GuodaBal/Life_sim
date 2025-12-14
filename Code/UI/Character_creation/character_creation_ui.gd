@@ -26,6 +26,7 @@ var current_shape = 0
 
 func _ready() -> void:
 	var id = 0
+	#Loading in shape options
 	for shape in shape_options:
 		var button_instance = shape_option_button.instantiate() as TextureButton
 		button_instance.texture_normal = shape
@@ -38,7 +39,6 @@ func _ready() -> void:
 func color_changed():
 	var color = Color.from_hsv(current_hue, current_saturation, current_value, 1.0)
 	character_sprite.modulate = color
-
 
 func _on_hue_slider_value_changed(value: float) -> void:
 	current_hue = value
@@ -56,25 +56,24 @@ func change_shape(id):
 	character_sprite.texture = shape_options[id]
 	current_shape = id
 
-
 func _on_return_pressed() -> void:
 	get_tree().paused = false
 	queue_free()
 
-
 func _on_add_character_pressed() -> void:
-	#add character
-	if agent_name.text.length() <= 0:
+	if agent_name.text.length() <= 0: #Cannot add nameless character
 		return
+	
 	var agent = preload("res://Code/Character_prototype/character_prototype.tscn").instantiate()
 	call_deferred("set_agent_attrs", agent)
 	get_parent().add_child(agent)
 	get_parent().init_agent(agent)
+	
 	get_tree().paused = false
 	queue_free()
 
 func set_agent_attrs(agent: Agent):
-	agent.id = get_tree().get_nodes_in_group("Agent").size()
+	agent.id = get_tree().get_nodes_in_group("Agent").size() #Making sure agent has unique id
 	agent.personality.set_personality(extrovertedness_slider.value, sedentariness_slider.value, sillyness_slider.value, meanness_slider.value)
 	agent.sprite.texture = shape_options[current_shape]
 	var color = Color.from_hsv(current_hue, current_saturation, current_value, 1.0)

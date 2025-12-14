@@ -17,10 +17,10 @@ action_queue = [NodePath("../SeekAction"), NodePath("../UseAction")]
 need_refilled = "Sleep"
 time_taken = 8.0
 refilled_per_second = 10.0
-busy_when_used = true
 personality_buffs = Dictionary[int, float]({
 1: 1.1
 })
+busy_when_used = true
 
 [node name="Sprite2D" parent="Base_furniture_item" index="0"]
 scale = Vector2(0.2, 0.2)

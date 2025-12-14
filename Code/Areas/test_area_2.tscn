@@ -106,7 +106,6 @@ tile_set = SubResource("TileSet_vvuvv")
 process_mode = 1
 modulate = Color(0.718754, 0.571703, 0.948841, 1)
 position = Vector2(1071, 829)
-id = 1
 
 [node name="PathFinding" type="Node" parent="."]
 process_mode = 1

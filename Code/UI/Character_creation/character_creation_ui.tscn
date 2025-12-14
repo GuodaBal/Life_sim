@@ -42,10 +42,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 313.0
-offset_top = 158.0
-offset_right = 313.0
-offset_bottom = 158.0
+offset_left = 295.12
+offset_top = 173.585
+offset_right = 333.12
+offset_bottom = 195.585
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.11, 1.11)
@@ -65,10 +65,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 0
 
 [node name="Appearance" type="VBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 metadata/_tab_index = 0
@@ -175,6 +174,7 @@ layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxEmpty_yasqw")
 
 [node name="Personality" type="VBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 10
 metadata/_tab_index = 1

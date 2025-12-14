@@ -1,6 +1,7 @@
 extends Node
 class_name Personality
 
+#All personality traits
 enum PersonalityTrait {
 	EXTROVERTED,
 	SEDENTARY,

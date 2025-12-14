@@ -1,8 +1,5 @@
 extends Control
 
-#@export var label_name = "placeholder"
-#@export var current_value = 10000
-
 @export var need : base_need
 
 @onready var need_label := $HBoxContainer/NeedLabel

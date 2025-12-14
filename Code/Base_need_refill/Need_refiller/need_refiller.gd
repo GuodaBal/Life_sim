@@ -12,13 +12,15 @@ var refilled_per_second = 1.0
 var refill_amount = 0.0
 
 func set_variables(variables):
+	#!!Could change variables to be an object, having as array is flimsy and easy to get wrong order
 	start_refill(variables["need_refilled"], variables["time_taken"], variables["refilled_per_second"], variables["personality_buffs"])
 
+#Refills the agents need, according to given variables
 func start_refill(new_need_refilled, new_time_taken, new_refilled_per_second, new_personality_buffs):
 	var personality_bonus = 0
 	for buff in new_personality_buffs.keys():
 		personality_bonus += agent.personality.get_value_by_name(buff)
-	if personality_bonus == 0: #If there are no buffs, make the multiplyer 1
+	if personality_bonus == 0: #If there are no buffs, make the multiplier 1
 		personality_bonus = 1
 	refill_amount = new_refilled_per_second * personality_bonus
 	

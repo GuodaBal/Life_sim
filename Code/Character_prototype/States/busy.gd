@@ -4,6 +4,7 @@ extends State
 
 #Called when entering state
 func enter():
+	#Checking what kind of goal we have, and either fullfill it or move on to idle state
 	if !character.current_goal:
 		call_deferred("action_finished")
 	elif character.current_goal is UseAction:
@@ -14,14 +15,11 @@ func enter():
 		character.current_goal.use()
 		character.sit(character.current_goal)
 		call_deferred("action_finished")
-		print_debug("using seat")
-	elif character.current_goal is ChatAction:
-		print_debug("Chat action")
+	elif character.current_goal is ChatAction: #!!Duplicate with UseAction, should be adjusted
 		character.current_goal.chat_with.chat(character)
 		var variables = character.current_goal.chat_with.get_variables()
 		character.start_need_refill(variables)
 	else:
-		print_debug("Finished aciton")
 		call_deferred("action_finished")
 
 #Called when exiting state
@@ -32,10 +30,9 @@ func exit():
 		conversation.queue_free()
 	if character.current_goal is UseAction:
 		character.current_goal.use_item.stop_using()
-	#if character.sitting_on && character.goal_queue.size() <= 1:
-		#character.stop_sitting()
 	if character.is_sleeping:
 		character.wake_up()
+	#Marking the current goal as completed, and moving on to next one
 	character.current_goal = null
 	character.goal_queue.pop_front()
 
@@ -46,10 +43,6 @@ func update(delta):
 #Called on physics_process(delta)
 func physics_update(delta):
 	pass
-
-func fill_need(need_name, fill_amount):
-	pass
-	#character.fill_need(need_name, fill_amount)
 
 func action_finished():
 	switch_state.emit(self, "Idle")

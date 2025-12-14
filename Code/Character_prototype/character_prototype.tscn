@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dbrex0thw0rrg"]
+[gd_scene load_steps=20 format=3 uid="uid://dbrex0thw0rrg"]
 
 [ext_resource type="Script" uid="uid://d0au14ysxkrww" path="res://Code/Character_prototype/character_prototype.gd" id="1_po7sx"]
 [ext_resource type="Texture2D" uid="uid://ctcrfq26bqy0i" path="res://Assets/CharacterShapesVector/square.svg" id="2_5k1b4"]
@@ -31,9 +31,6 @@ point_count = 3
 [sub_resource type="CircleShape2D" id="CircleShape2D_x8yof"]
 radius = 111.162
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x8yof"]
-size = Vector2(42, 2)
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_3hesn"]
 radius = 65.0
 
@@ -56,7 +53,7 @@ motion_mode = 1
 script = ExtResource("1_po7sx")
 action_queue = [NodePath("SocializationActionQueue/SeekAction"), NodePath("SocializationActionQueue/ChatAction")]
 need_refilled = "Social"
-refilled_per_second = 10.0
+refilled_per_second = 13.0
 personality_buffs = Dictionary[int, float]({
 0: 1.5,
 4: 0.5
@@ -90,7 +87,7 @@ need_curve = SubResource("Curve_5k1b4")
 
 [node name="Sleep" parent="Needs" instance=ExtResource("2_x40v0")]
 personality_buffs = Dictionary[int, float]({
-1: 0.01
+1: 0.02
 })
 need_name = "Sleep"
 decrease_speed = 0.35
@@ -98,11 +95,11 @@ need_curve = SubResource("Curve_aiq3k")
 
 [node name="Social" parent="Needs" instance=ExtResource("2_x40v0")]
 personality_buffs = Dictionary[int, float]({
-0: 0.03,
-4: -0.03
+0: 0.05,
+4: -0.05
 })
 need_name = "Social"
-decrease_speed = 0.8
+decrease_speed = 0.5
 need_curve = SubResource("Curve_5k1b4")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
@@ -145,24 +142,12 @@ collision_mask = 3
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LineOfSight"]
 polygon = PackedVector2Array(0, 0, -67.9965, 46.0052, -43.9943, 75.0034, -0.99305, 91.0001, 42.0059, 76.9968, 65.0032, 41.995)
 
-[node name="PathingDirection" type="Area2D" parent="."]
-visible = false
-collision_layer = 4
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PathingDirection"]
-position = Vector2(21, 0)
-shape = SubResource("RectangleShape2D_x8yof")
-
 [node name="SpeedTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 
 [node name="Pos" type="Node2D" parent="."]
 position = Vector2(10, 0)
-
-[node name="SocialPos" type="Node2D" parent="."]
-position = Vector2(60, 0)
 
 [node name="Need_refiller" parent="." node_paths=PackedStringArray("agent") instance=ExtResource("8_aiq3k")]
 agent = NodePath("..")
@@ -198,6 +183,5 @@ shape = SubResource("CircleShape2D_agf6k")
 [connection signal="timeout" from="StateMachine/Idle/CheckForNextGoal" to="." method="_on_check_for_next_goal_timeout"]
 [connection signal="timeout" from="StateMachine/Idle/CheckForNextGoal" to="StateMachine/Idle" method="_on_check_for_next_goal_timeout"]
 [connection signal="area_shape_entered" from="LineOfSight" to="StateMachine/Seeking" method="_on_line_of_sight_area_shape_entered"]
-[connection signal="area_entered" from="PathingDirection" to="." method="_on_pathing_direction_area_entered"]
 [connection signal="timeout" from="SpeedTimer" to="." method="_on_speed_timer_timeout"]
 [connection signal="area_entered" from="UseArea" to="StateMachine/Seeking" method="_on_use_area_area_entered"]

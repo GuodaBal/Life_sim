@@ -2,9 +2,6 @@ extends Node
 
 class_name base_need
 
-#@onready var score := $HBoxContainer/NeedScore
-#@onready var label := $HBoxContainer/NeedLabel
-
 @export var personality_buffs : Dictionary[Personality.PersonalityTrait, float]
 
 @export var need_name := "placeholder"
@@ -16,7 +13,6 @@ var priority
 
 func _ready() -> void:
 	value = 100
-	#label.text = need_name
 
 func _physics_process(delta: float) -> void:
 	value -= decrease_speed * delta

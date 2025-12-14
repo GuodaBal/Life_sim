@@ -10,6 +10,7 @@ var original_tile_weights = {}
 func _physics_process(_delta: float) -> void:
 	update_nav_map()
 
+#Creates navigation map for given tilemap
 func create_nav_map(tilemap : TileMapLayer):
 	self.tilemap = tilemap
 	
@@ -20,8 +21,9 @@ func create_nav_map(tilemap : TileMapLayer):
 	
 	add_navigation_tiles(used_tiles)
 	connect_navigation_tiles(used_tiles)
-	
 
+#Used to enable and disable points on the nav map. For example, if a agent blocks a tile, it will
+#become disabled for however many frames
 func update_nav_map():
 	for point in astar.get_point_ids():
 		astar.set_point_disabled(point, false)
@@ -33,16 +35,15 @@ func update_nav_map():
 				if astar.has_point(id):
 					astar.set_point_disabled(id, true)
 		if obstacle is Agent:
-			#set_tile_weight_around_agent(obstacle.position)
 			var shape = obstacle.collision_shape.shape
 			if shape is CircleShape2D:
 				var closest_point_id = astar.get_closest_point(tilemap.local_to_map(obstacle.position))
 				var closest_point = tilemap.map_to_local(astar.get_point_position(closest_point_id))
 				astar.set_point_disabled(closest_point_id, true)
-				
+				#Gets the closest points to the agent, and if they are inside the collision shape,
+				#they get disabled
 				while obstacle.position.distance_to(closest_point) <= shape.radius:
 					astar.set_point_disabled(closest_point_id, true)
-					#astar.set_point_weight_scale(closest_point_id, 5)
 					closest_point_id = astar.get_closest_point(tilemap.local_to_map(obstacle.position))
 					closest_point = tilemap.map_to_local(astar.get_point_position(closest_point_id))
 
@@ -57,6 +58,7 @@ func update_navigation_tile(tile):
 	var weight = tilemap.get_cell_tile_data(tile).get_custom_data("Weight")
 	astar.add_point(id, tile, weight)
 
+#Connects adjacent tiles, both ones side by side and diagonal ones
 func connect_navigation_tiles(tiles : Array):
 	for tile in tiles:
 		var id = get_id_for_point(tile)
@@ -77,60 +79,15 @@ func get_path_between_points(start : Vector2, end : Vector2, allow_partial_path 
 	var start_tile = tilemap.local_to_map(start)
 	var end_tile = tilemap.local_to_map(end)
 	
-	#print_debug(start)
-	#print_debug(end)
-	#
-	#print_debug(start_tile)
-	#print_debug(end_tile)
-	
 	var start_tile_id = get_id_for_point(start_tile)
 	var end_tile_id = get_id_for_point(end_tile)
-	
-	#print_debug(start_tile_id)
-	#print_debug(end_tile_id)
 	
 	if !astar.has_point(start_tile_id) || !astar.has_point(end_tile_id):
 		return null
 	
 	var global_points = []
 	
-	
 	for point in astar.get_point_path(start_tile_id, end_tile_id, allow_partial_path):
 		global_points.append(tilemap.map_to_local(point))
 	
 	return global_points
-
-func is_point_available(point : Vector2):
-	var tile = tilemap.local_to_map(point)
-	var tile_id = get_id_for_point(tile)
-	print_debug(astar.has_point(tile_id))
-	print_debug(astar.has_point(tile_id) && !astar.is_point_disabled(tile_id))
-	return astar.has_point(tile_id) && !astar.is_point_disabled(tile_id)
-
-func set_tile_weight_around_agent(position):
-	if original_tile_weights.size() <= 0:
-		for tile in tilemap.get_used_cells():
-			var weight = tilemap.get_cell_tile_data(tile).get_custom_data("Weight")
-			original_tile_weights[tile] = weight
-	
-	var middle_tile = tilemap.local_to_map(position)
-	
-	for x in range(-2, 3):
-		for y in range(-2, 3):
-			var current_tile = middle_tile + Vector2i(x, y)
-			if original_tile_weights.keys().has(current_tile):
-				if original_tile_weights[current_tile] == 1:
-					tilemap.set_cell(current_tile, 1, Vector2i(0,0), 0)
-				if original_tile_weights[current_tile] == 2:
-					tilemap.set_cell(current_tile, 1, Vector2i(0,0), 1)
-	
-	for x in range(-1, 2):
-		for y in range(-1, 2):
-			if tilemap.get_cell_tile_data(middle_tile) != null:
-				var current_tile = middle_tile + Vector2i(x, y)
-				if x == 0 || y == 0:
-					tilemap.set_cell(current_tile, 1, Vector2i(0,0), 2)
-				else:
-					tilemap.set_cell(current_tile, 1, Vector2i(0,0), 1)
-				update_navigation_tile(current_tile)
-	

@@ -11,7 +11,7 @@ extends Node2D
 var previous_agent : Agent
 
 func _ready() -> void:
-	$Floor.set_floor_weights()
+	ground_tilemap.set_floor_weights()
 	pathfinding.create_nav_map(ground_tilemap)
 	for agent in get_tree().get_nodes_in_group("Agent"):
 		agent.pathfinding = pathfinding
