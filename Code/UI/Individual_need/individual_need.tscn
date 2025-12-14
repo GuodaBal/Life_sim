@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcxxlxfhxigkn"]
+
+[ext_resource type="Script" uid="uid://21gh7qvduglj" path="res://Code/UI/Individual_need/individual_need.gd" id="1_3os7g"]
+
+[node name="NeedPrototype" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3os7g")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 0
+offset_right = 370.0
+offset_bottom = 61.0
+theme_override_constants/separation = 20
+
+[node name="NeedLabel" type="RichTextLabel" parent="HBoxContainer"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 24
+text = "Placeholder"
+
+[node name="NeedScore" type="HSlider" parent="HBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+step = 0.1
+value = 100.0
+editable = false
+
+[node name="ValueUpdateTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[connection signal="timeout" from="ValueUpdateTimer" to="." method="_on_value_update_timer_timeout"]

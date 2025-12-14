@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://ctp860dofyi8a"]
+
+[ext_resource type="PackedScene" uid="uid://baed2a0hu02n3" path="res://Code/Furniture_items/base_furniture_item.tscn" id="1_rjqva"]
+[ext_resource type="Texture2D" uid="uid://broxe7352yld8" path="res://Assets/Furniture_new/Bookshelf.png" id="2_etgiv"]
+[ext_resource type="Script" uid="uid://cse3b6cp7seiw" path="res://Code/Actions/seek_action.gd" id="3_etgiv"]
+[ext_resource type="Script" uid="uid://bpssupycneipg" path="res://Code/Actions/sit_action.gd" id="4_qihoj"]
+[ext_resource type="Script" uid="uid://dhqom6yw5ly2p" path="res://Code/Actions/use_action.gd" id="5_yslns"]
+
+[node name="Bookcase" type="Node2D"]
+
+[node name="Base_furniture_item" parent="." node_paths=PackedStringArray("action_queue") instance=ExtResource("1_rjqva")]
+action_queue = [NodePath("../SeekAction"), NodePath("../SitAction"), NodePath("../UseAction")]
+need_refilled = "Fun"
+time_taken = 10.0
+refilled_per_second = 11.0
+personality_buffs = Dictionary[int, float]({
+2: 0.5,
+6: 1.5
+})
+
+[node name="Sprite2D" parent="Base_furniture_item" index="0"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_etgiv")
+
+[node name="CollisionShape2D" parent="Base_furniture_item/UsabilityArea" index="0"]
+position = Vector2(2, -6)
+
+[node name="SeekAction" type="Node" parent="." node_paths=PackedStringArray("item")]
+script = ExtResource("3_etgiv")
+item = NodePath("../Base_furniture_item/UsabilityArea")
+metadata/_custom_type_script = "uid://cse3b6cp7seiw"
+
+[node name="SitAction" type="Node" parent="."]
+script = ExtResource("4_qihoj")
+metadata/_custom_type_script = "uid://bpssupycneipg"
+
+[node name="UseAction" type="Node" parent="." node_paths=PackedStringArray("use_item")]
+script = ExtResource("5_yslns")
+use_item = NodePath("../Base_furniture_item")
+metadata/_custom_type_script = "uid://dhqom6yw5ly2p"
+
+[editable path="Base_furniture_item"]

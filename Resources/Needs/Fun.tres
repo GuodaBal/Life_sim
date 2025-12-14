@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="base_need" load_steps=2 format=3 uid="uid://drqr4idtubqe"]
+
+[ext_resource type="Script" uid="uid://bemeohp6mbpia" path="res://Code/Base_need/need_prototype.gd" id="1_7fryn"]
+
+[resource]
+script = ExtResource("1_7fryn")
+need_name = "Fun"
+decrease_speed = 1
+metadata/_custom_type_script = "uid://bemeohp6mbpia"

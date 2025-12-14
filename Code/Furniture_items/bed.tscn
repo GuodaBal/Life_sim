@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://dnygbcwas7h5m"]
+
+[ext_resource type="PackedScene" uid="uid://baed2a0hu02n3" path="res://Code/Furniture_items/base_furniture_item.tscn" id="1_crk4q"]
+[ext_resource type="Script" uid="uid://ochsf7byge3y" path="res://Code/Furniture_items/bed.gd" id="2_1hclg"]
+[ext_resource type="Texture2D" uid="uid://cornnprdug431" path="res://Assets/Furniture_new/Bed.png" id="2_36rci"]
+[ext_resource type="Script" uid="uid://cse3b6cp7seiw" path="res://Code/Actions/seek_action.gd" id="3_36rci"]
+[ext_resource type="Script" uid="uid://dhqom6yw5ly2p" path="res://Code/Actions/use_action.gd" id="4_1hclg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1hclg"]
+size = Vector2(102, 97)
+
+[node name="Bed" type="Node2D"]
+
+[node name="Base_furniture_item" parent="." node_paths=PackedStringArray("action_queue") instance=ExtResource("1_crk4q")]
+script = ExtResource("2_1hclg")
+action_queue = [NodePath("../SeekAction"), NodePath("../UseAction")]
+need_refilled = "Sleep"
+time_taken = 8.0
+refilled_per_second = 10.0
+busy_when_used = true
+personality_buffs = Dictionary[int, float]({
+1: 1.1
+})
+
+[node name="Sprite2D" parent="Base_furniture_item" index="0"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_36rci")
+
+[node name="CollisionShape2D" parent="Base_furniture_item" index="1"]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_1hclg")
+
+[node name="CollisionShape2D" parent="Base_furniture_item/UsabilityArea" index="0"]
+position = Vector2(-1, -10)
+
+[node name="SeekAction" type="Node" parent="." node_paths=PackedStringArray("item")]
+script = ExtResource("3_36rci")
+item = NodePath("../Base_furniture_item")
+metadata/_custom_type_script = "uid://cse3b6cp7seiw"
+
+[node name="UseAction" type="Node" parent="." node_paths=PackedStringArray("use_item")]
+script = ExtResource("4_1hclg")
+use_item = NodePath("../Base_furniture_item")
+metadata/_custom_type_script = "uid://dhqom6yw5ly2p"
+
+[editable path="Base_furniture_item"]

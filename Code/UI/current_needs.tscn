@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcl3thaxqjm88"]
+
+[ext_resource type="PackedScene" uid="uid://dcxxlxfhxigkn" path="res://Code/UI/Individual_need/individual_need.tscn" id="1_2lne2"]
+[ext_resource type="Script" uid="uid://bi3xg40syfghe" path="res://Code/UI/current_needs.gd" id="1_bw50g"]
+
+[node name="CurrentNeeds" type="Control"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 402.0
+offset_bottom = 243.0
+script = ExtResource("1_bw50g")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.44479, 0.393212, 0.544659, 1)
+
+[node name="NeedsContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.26
+offset_right = 12.26
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 60
+
+[node name="NeedPrototype" parent="NeedsContainer" instance=ExtResource("1_2lne2")]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="NeedPrototype2" parent="NeedsContainer" instance=ExtResource("1_2lne2")]
+layout_mode = 2
+
+[node name="NeedPrototype3" parent="NeedsContainer" instance=ExtResource("1_2lne2")]
+layout_mode = 2
+
+[node name="NeedPrototype4" parent="NeedsContainer" instance=ExtResource("1_2lne2")]
+layout_mode = 2

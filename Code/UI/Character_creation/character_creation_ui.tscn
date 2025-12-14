@@ -1,0 +1,375 @@
+[gd_scene load_steps=14 format=3 uid="uid://bpml4nvuvb8x0"]
+
+[ext_resource type="Script" uid="uid://deqxshxwp4y0j" path="res://Code/UI/Character_creation/character_creation_ui.gd" id="1_oe0x8"]
+[ext_resource type="Texture2D" uid="uid://3ye85ruwwpvi" path="res://Assets/CharacterShapesVector/burst.svg" id="2_v421o"]
+[ext_resource type="Texture2D" uid="uid://ckipqkgdsdtp7" path="res://icon.svg" id="2_yasqw"]
+[ext_resource type="Texture2D" uid="uid://do8kxw3bfyt1p" path="res://Assets/CharacterShapesVector/circle.svg" id="3_ftty3"]
+[ext_resource type="Texture2D" uid="uid://c3kbewqgvvgvx" path="res://Assets/CharacterShapesVector/pentagon.svg" id="4_6jhg8"]
+[ext_resource type="Texture2D" uid="uid://5xlsotetgkok" path="res://Assets/CharacterShapesVector/splatter.svg" id="5_ag5t5"]
+[ext_resource type="Texture2D" uid="uid://ctcrfq26bqy0i" path="res://Assets/CharacterShapesVector/square.svg" id="6_uwxgv"]
+[ext_resource type="Texture2D" uid="uid://bbk621ca0rcrd" path="res://Assets/CharacterShapesVector/star.svg" id="7_b2o5j"]
+[ext_resource type="Texture2D" uid="uid://da83crt2rqtq8" path="res://Assets/CharacterShapesVector/triangle.svg" id="8_oa8ls"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yasqw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v7mrb"]
+bg_color = Color(0.385618, 0.23635, 0.421269, 1)
+expand_margin_left = 150.0
+expand_margin_right = 150.0
+
+[sub_resource type="Gradient" id="Gradient_yasqw"]
+colors = PackedColorArray(0.628085, 0.784947, 0.978565, 1, 0.359778, 0.443049, 0.840224, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_eeda7"]
+gradient = SubResource("Gradient_yasqw")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0, 1)
+
+[node name="CharacterCreationUI" type="Control"]
+process_mode = 3
+z_index = 4
+custom_minimum_size = Vector2(1152, 648)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("1_oe0x8")
+shape_options = Array[Texture2D]([ExtResource("2_v421o"), ExtResource("3_ftty3"), ExtResource("4_6jhg8"), ExtResource("5_ag5t5"), ExtResource("6_uwxgv"), ExtResource("7_b2o5j"), ExtResource("8_oa8ls")])
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 313.0
+offset_top = 158.0
+offset_right = 313.0
+offset_bottom = 158.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.11, 1.11)
+split_offset = 495
+dragging_enabled = false
+dragger_visibility = 2
+drag_area_highlight_in_editor = true
+
+[node name="CustomisationSelection" type="Panel" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="HSplitContainer/CustomisationSelection"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 1
+
+[node name="Appearance" type="VBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+metadata/_tab_index = 0
+
+[node name="ColorRect" type="ColorRect" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance"]
+custom_minimum_size = Vector2(0, 58.75)
+layout_mode = 2
+color = Color(0.266559, 0.235081, 0.315258, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center]Select a shape"
+
+[node name="VSeparator2" type="VSeparator" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance"]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yasqw")
+
+[node name="ShapeOptions" type="GridContainer" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 4
+
+[node name="VSeparator" type="VSeparator" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_styles/separator = SubResource("StyleBoxFlat_v7mrb")
+
+[node name="ColorSliders" type="VBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance"]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_constants/separation = 30
+
+[node name="Hue" type="HBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorSliders"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorSliders/Hue"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+text = "Hue"
+
+[node name="HueSlider" type="HSlider" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorSliders/Hue"]
+custom_minimum_size = Vector2(250, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="Saturation" type="HBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorSliders"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorSliders/Saturation"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+text = "Saturation"
+
+[node name="SaturationSlider" type="HSlider" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorSliders/Saturation"]
+custom_minimum_size = Vector2(250, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="Value" type="HBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorSliders"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorSliders/Value"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+text = "Value"
+
+[node name="ValueSlider" type="HSlider" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorSliders/Value"]
+custom_minimum_size = Vector2(250, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="VSeparator3" type="VSeparator" parent="HSplitContainer/CustomisationSelection/TabContainer/Appearance"]
+custom_minimum_size = Vector2(0, 14.81)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yasqw")
+
+[node name="Personality" type="VBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+metadata/_tab_index = 1
+
+[node name="ColorRect" type="ColorRect" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality"]
+custom_minimum_size = Vector2(0, 58.75)
+layout_mode = 2
+color = Color(0.266559, 0.235081, 0.315258, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center]Create a personality"
+
+[node name="PersonalitySliders" type="VBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_constants/separation = 50
+
+[node name="Extrovertedness" type="HBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders/Extrovertedness"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+text = "Introvert"
+
+[node name="ExtrovertednessSlider" type="HSlider" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders/Extrovertedness"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders/Extrovertedness"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+text = "Extrovert"
+fit_content = true
+
+[node name="Sedentariness" type="HBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders/Sedentariness"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+text = "Active"
+
+[node name="SedentarinessSlider" type="HSlider" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders/Sedentariness"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders/Sedentariness"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+text = "Sedentary"
+fit_content = true
+
+[node name="Sillyness" type="HBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders/Sillyness"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+text = "Serious"
+
+[node name="SillynessSlider" type="HSlider" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders/Sillyness"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders/Sillyness"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+text = "Silly"
+fit_content = true
+
+[node name="Meanness" type="HBoxContainer" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders/Meanness"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+text = "Friendly"
+
+[node name="MeannessSlider" type="HSlider" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders/Meanness"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality/PersonalitySliders/Meanness"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 26
+text = "Mean"
+fit_content = true
+
+[node name="VSeparator3" type="VSeparator" parent="HSplitContainer/CustomisationSelection/TabContainer/Personality"]
+custom_minimum_size = Vector2(0, 14.81)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yasqw")
+
+[node name="CharacterDisplay" type="TextureRect" parent="HSplitContainer"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_eeda7")
+
+[node name="CenterContainer" type="CenterContainer" parent="HSplitContainer/CharacterDisplay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterPosition" type="Control" parent="HSplitContainer/CharacterDisplay/CenterContainer"]
+layout_mode = 2
+
+[node name="Character" type="Sprite2D" parent="HSplitContainer/CharacterDisplay/CenterContainer/CenterPosition"]
+texture = ExtResource("2_yasqw")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/CharacterDisplay"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -182.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+localize_numeral_system = false
+
+[node name="Return" type="Button" parent="HSplitContainer/CharacterDisplay/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Return"
+
+[node name="AddCharacter" type="Button" parent="HSplitContainer/CharacterDisplay/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Add character"
+
+[node name="Name" type="TextEdit" parent="HSplitContainer/CharacterDisplay"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -161.525
+offset_right = 100.0
+offset_bottom = -111.525
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+placeholder_text = "Name"
+scroll_fit_content_width = true
+
+[connection signal="value_changed" from="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorSliders/Hue/HueSlider" to="." method="_on_hue_slider_value_changed"]
+[connection signal="value_changed" from="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorSliders/Saturation/SaturationSlider" to="." method="_on_saturation_slider_value_changed"]
+[connection signal="value_changed" from="HSplitContainer/CustomisationSelection/TabContainer/Appearance/ColorSliders/Value/ValueSlider" to="." method="_on_value_slider_value_changed"]
+[connection signal="pressed" from="HSplitContainer/CharacterDisplay/HBoxContainer/Return" to="." method="_on_return_pressed"]
+[connection signal="pressed" from="HSplitContainer/CharacterDisplay/HBoxContainer/AddCharacter" to="." method="_on_add_character_pressed"]

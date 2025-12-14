@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://baed2a0hu02n3"]
+
+[ext_resource type="Script" uid="uid://dib83kqtw0jyo" path="res://Code/Furniture_items/furniture.gd" id="1_e5vx7"]
+[ext_resource type="Texture2D" uid="uid://b085vgyh2j3p0" path="res://Assets/CharacterShapes/circle.png" id="2_wi5ua"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pfgtn"]
+size = Vector2(62, 76)
+
+[node name="Base_furniture_item" type="StaticBody2D" groups=["Furniture", "Obstacle"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_e5vx7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.55, 0.55)
+texture = ExtResource("2_wi5ua")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+
+[node name="UsabilityArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UsabilityArea"]
+shape = SubResource("RectangleShape2D_pfgtn")

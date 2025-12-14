@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqkyerkuy0vcg"]
+
+[ext_resource type="Texture2D" uid="uid://bavbfwssqjchw" path="res://Assets/Furniture_new/Table.png" id="1_wfu0y"]
+
+[node name="Table" type="StaticBody2D" groups=["Obstacle"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_wfu0y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 17.5)

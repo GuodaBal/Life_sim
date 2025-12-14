@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6p8rb2fd1uba"]
+
+[ext_resource type="PackedScene" uid="uid://baed2a0hu02n3" path="res://Code/Furniture_items/base_furniture_item.tscn" id="1_3fokb"]
+[ext_resource type="Texture2D" uid="uid://b4ewkbfrjn5ql" path="res://Assets/Furniture_new/TV.png" id="2_7y3bv"]
+[ext_resource type="Script" uid="uid://bpssupycneipg" path="res://Code/Actions/sit_action.gd" id="4_dro6f"]
+[ext_resource type="Script" uid="uid://dhqom6yw5ly2p" path="res://Code/Actions/use_action.gd" id="5_7hrdc"]
+
+[node name="TV" type="Node2D"]
+
+[node name="Base_furniture_item" parent="." node_paths=PackedStringArray("action_queue") instance=ExtResource("1_3fokb")]
+action_queue = [NodePath("../SitAction"), NodePath("../UseAction")]
+need_refilled = "Fun"
+refilled_per_second = 15.0
+personality_buffs = Dictionary[int, float]({
+1: 1.2
+})
+
+[node name="Sprite2D" parent="Base_furniture_item" index="0"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_7y3bv")
+
+[node name="CollisionShape2D" parent="Base_furniture_item" index="1"]
+position = Vector2(-1.5, 17)
+
+[node name="UsabilityArea" parent="Base_furniture_item" index="2"]
+position = Vector2(0, 128)
+
+[node name="CollisionShape2D" parent="Base_furniture_item/UsabilityArea" index="0"]
+position = Vector2(0.5, 17.75)
+
+[node name="SitAction" type="Node" parent="." node_paths=PackedStringArray("sit_in_area")]
+script = ExtResource("4_dro6f")
+sit_in_area = NodePath("../Base_furniture_item/UsabilityArea")
+metadata/_custom_type_script = "uid://bpssupycneipg"
+
+[node name="UseAction" type="Node" parent="." node_paths=PackedStringArray("use_item")]
+script = ExtResource("5_7hrdc")
+use_item = NodePath("../Base_furniture_item")
+metadata/_custom_type_script = "uid://dhqom6yw5ly2p"
+
+[editable path="Base_furniture_item"]

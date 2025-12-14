@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://4wlrsp2syybg"]
+
+[ext_resource type="Script" uid="uid://p5km0kl35t7b" path="res://Code/Base_need_refill/Need_refiller/need_refiller.gd" id="1_jy6eg"]
+
+[node name="Need_refiller" type="Node2D"]
+script = ExtResource("1_jy6eg")
+
+[node name="ActionCompletionTime" type="Timer" parent="."]
+one_shot = true
+
+[node name="NeedFillInterval" type="Timer" parent="."]
+
+[connection signal="timeout" from="ActionCompletionTime" to="." method="_on_action_completion_time_timeout"]
+[connection signal="timeout" from="NeedFillInterval" to="." method="_on_need_fill_interval_timeout"]

@@ -1,0 +1,203 @@
+[gd_scene load_steps=21 format=3 uid="uid://dbrex0thw0rrg"]
+
+[ext_resource type="Script" uid="uid://d0au14ysxkrww" path="res://Code/Character_prototype/character_prototype.gd" id="1_po7sx"]
+[ext_resource type="Texture2D" uid="uid://ctcrfq26bqy0i" path="res://Assets/CharacterShapesVector/square.svg" id="2_5k1b4"]
+[ext_resource type="PackedScene" uid="uid://c7o4dhfdkln7l" path="res://Code/Base_need/base_need.tscn" id="2_x40v0"]
+[ext_resource type="Script" uid="uid://b7rk6fecly51t" path="res://Code/State_machine/state_machine.gd" id="3_ohson"]
+[ext_resource type="Script" uid="uid://bfiynp3fsx5tw" path="res://Code/Character_prototype/States/idle.gd" id="4_8auml"]
+[ext_resource type="Script" uid="uid://5fdwy77s6y4i" path="res://Code/Character_prototype/States/busy.gd" id="5_x8yof"]
+[ext_resource type="Script" uid="uid://d3l8onccgab02" path="res://Code/Character_prototype/States/seeking.gd" id="6_5k1b4"]
+[ext_resource type="PackedScene" uid="uid://4wlrsp2syybg" path="res://Code/Base_need_refill/Need_refiller/need_refiller.tscn" id="8_aiq3k"]
+[ext_resource type="Script" uid="uid://cse3b6cp7seiw" path="res://Code/Actions/seek_action.gd" id="9_3hesn"]
+[ext_resource type="Script" uid="uid://c5ijyrjxicbr3" path="res://Code/Actions/chat_action.gd" id="10_3hesn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_noc2g"]
+
+[sub_resource type="Curve" id="Curve_x8yof"]
+_limits = [0.0, 1.5, 0.0, 100.0]
+_data = [Vector2(0, 1.5), 0.0, 5.49883e-06, 0, 0, Vector2(42.2939, 0.522656), -0.0269191, -0.0269191, 0, 0, Vector2(100, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_5k1b4"]
+_limits = [0.0, 1.0, 0.0, 100.0]
+_data = [Vector2(0.60241, 0.78982), 0.0, 0.0, 0, 0, Vector2(51.6129, 0.298077), 0.0, 0.0, 0, 0, Vector2(100, 0.563281), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_aiq3k"]
+_limits = [0.0, 2.0, 0.0, 100.0]
+_data = [Vector2(0, 2), 0.0, 0.0, 0, 0, Vector2(39.6154, 0.523664), -0.036503, -0.036503, 0, 0, Vector2(85.8434, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x8yof"]
+radius = 111.162
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x8yof"]
+size = Vector2(42, 2)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3hesn"]
+radius = 65.0
+
+[sub_resource type="Gradient" id="Gradient_3hesn"]
+offsets = PackedFloat32Array(0, 0.293578, 0.559633, 0.761468, 1)
+colors = PackedColorArray(0.678944, 0.678944, 0.678944, 1, 0.390888, 0.390888, 0.390888, 1, 0.210373, 0.210373, 0.210373, 1, 0.102776, 0.102776, 0.102776, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_agf6k"]
+gradient = SubResource("Gradient_3hesn")
+fill = 1
+fill_from = Vector2(0.508547, 0.491453)
+fill_to = Vector2(0.504274, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_agf6k"]
+radius = 4.12311
+
+[node name="CharacterPrototype" type="CharacterBody2D" node_paths=PackedStringArray("action_queue", "needs_list") groups=["Agent", "Obstacle"]]
+z_index = 2
+motion_mode = 1
+script = ExtResource("1_po7sx")
+action_queue = [NodePath("SocializationActionQueue/SeekAction"), NodePath("SocializationActionQueue/ChatAction")]
+need_refilled = "Social"
+refilled_per_second = 10.0
+personality_buffs = Dictionary[int, float]({
+0: 1.5,
+4: 0.5
+})
+needs_list = [NodePath("Needs/Hunger"), NodePath("Needs/Fun"), NodePath("Needs/Sleep"), NodePath("Needs/Social")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -1.57072
+shape = SubResource("CircleShape2D_noc2g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("2_5k1b4")
+
+[node name="Needs" type="Node" parent="."]
+
+[node name="Hunger" parent="Needs" instance=ExtResource("2_x40v0")]
+need_name = "Hunger"
+decrease_speed = 1.0
+need_curve = SubResource("Curve_x8yof")
+
+[node name="Fun" parent="Needs" instance=ExtResource("2_x40v0")]
+personality_buffs = Dictionary[int, float]({
+2: 0.02,
+6: -0.02
+})
+need_name = "Fun"
+decrease_speed = 0.4
+need_curve = SubResource("Curve_5k1b4")
+
+[node name="Sleep" parent="Needs" instance=ExtResource("2_x40v0")]
+personality_buffs = Dictionary[int, float]({
+1: 0.01
+})
+need_name = "Sleep"
+decrease_speed = 0.35
+need_curve = SubResource("Curve_aiq3k")
+
+[node name="Social" parent="Needs" instance=ExtResource("2_x40v0")]
+personality_buffs = Dictionary[int, float]({
+0: 0.03,
+4: -0.03
+})
+need_name = "Social"
+decrease_speed = 0.8
+need_curve = SubResource("Curve_5k1b4")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("3_ohson")
+starting_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://b7rk6fecly51t"
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "line_of_sight")]
+script = ExtResource("4_8auml")
+character = NodePath("../..")
+line_of_sight = NodePath("../../LineOfSight")
+
+[node name="CheckForNextGoal" type="Timer" parent="StateMachine/Idle"]
+autostart = true
+
+[node name="Busy" type="Node" parent="StateMachine" node_paths=PackedStringArray("character")]
+script = ExtResource("5_x8yof")
+character = NodePath("../..")
+
+[node name="Seeking" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "line_of_sight", "pos", "personal_bubble", "communication_area")]
+script = ExtResource("6_5k1b4")
+character = NodePath("../..")
+line_of_sight = NodePath("../../LineOfSight")
+pos = NodePath("../../Pos")
+personal_bubble = NodePath("../../PersonalBubble")
+communication_area = NodePath("../../ComunnicationArea")
+
+[node name="PersonalBubble" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PersonalBubble"]
+shape = SubResource("CircleShape2D_x8yof")
+
+[node name="LineOfSight" type="Area2D" parent="."]
+rotation = -1.57072
+collision_mask = 3
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LineOfSight"]
+polygon = PackedVector2Array(0, 0, -67.9965, 46.0052, -43.9943, 75.0034, -0.99305, 91.0001, 42.0059, 76.9968, 65.0032, 41.995)
+
+[node name="PathingDirection" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathingDirection"]
+position = Vector2(21, 0)
+shape = SubResource("RectangleShape2D_x8yof")
+
+[node name="SpeedTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="Pos" type="Node2D" parent="."]
+position = Vector2(10, 0)
+
+[node name="SocialPos" type="Node2D" parent="."]
+position = Vector2(60, 0)
+
+[node name="Need_refiller" parent="." node_paths=PackedStringArray("agent") instance=ExtResource("8_aiq3k")]
+agent = NodePath("..")
+
+[node name="SocializationActionQueue" type="Node" parent="."]
+
+[node name="SeekAction" type="Node" parent="SocializationActionQueue" node_paths=PackedStringArray("item")]
+script = ExtResource("9_3hesn")
+item = NodePath("../..")
+metadata/_custom_type_script = "uid://cse3b6cp7seiw"
+
+[node name="ChatAction" type="Node" parent="SocializationActionQueue" node_paths=PackedStringArray("chat_with")]
+script = ExtResource("10_3hesn")
+chat_with = NodePath("../..")
+metadata/_custom_type_script = "uid://c5ijyrjxicbr3"
+
+[node name="ComunnicationArea" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ComunnicationArea"]
+shape = SubResource("CircleShape2D_3hesn")
+
+[node name="FocusGlow" type="PointLight2D" parent="."]
+visible = false
+energy = 0.6
+texture = SubResource("GradientTexture2D_agf6k")
+
+[node name="UseArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UseArea"]
+shape = SubResource("CircleShape2D_agf6k")
+
+[connection signal="timeout" from="StateMachine/Idle/CheckForNextGoal" to="." method="_on_check_for_next_goal_timeout"]
+[connection signal="timeout" from="StateMachine/Idle/CheckForNextGoal" to="StateMachine/Idle" method="_on_check_for_next_goal_timeout"]
+[connection signal="area_shape_entered" from="LineOfSight" to="StateMachine/Seeking" method="_on_line_of_sight_area_shape_entered"]
+[connection signal="area_entered" from="PathingDirection" to="." method="_on_pathing_direction_area_entered"]
+[connection signal="timeout" from="SpeedTimer" to="." method="_on_speed_timer_timeout"]
+[connection signal="area_entered" from="UseArea" to="StateMachine/Seeking" method="_on_use_area_area_entered"]
